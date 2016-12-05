@@ -1,0 +1,23 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiang.etonlearn.repository.ActivityRepository">
+
+    <select id="queryByName" resultType="Activity">
+        SELECT *  FROM ACTIVITY WHERE NAME LIKE "%"#{name}"%"
+    </select>
+
+    <insert id="save" parameterType="Activity" useGeneratedKeys="true" keyProperty="oid">
+        insert into Activity(name, version) values(#{name}, #{version})
+    </insert>
+
+    <update id="update" parameterType="Activity">
+        UPDATE ACTIVITY
+        SET NAME = #{name},
+        VERSION = #{version}
+        WHERE OID = #{oid};
+    </update>
+
+    <delete id="deleteById">
+      DELETE FROM ACTIVITY
+      WHERE OID = #{oid}
+    </delete>
+</mapper>
