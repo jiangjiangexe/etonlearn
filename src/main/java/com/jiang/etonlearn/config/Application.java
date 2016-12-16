@@ -18,6 +18,7 @@ import java.util.List;
 
 @Configuration
 @ComponentScan
+@EnableAspectJAutoProxy
 @PropertySource("classpath:datasource.properties")
 @ImportResource("classpath:spring-cache-config.xml")
 @MapperScan(basePackages = {"com.jiang.etonlearn.repository"})
