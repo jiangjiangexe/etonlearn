@@ -7,7 +7,8 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
-    <cache:annotation-driven key-generator="userKeyGenerator"/><!-- 啟動cache的annotation設定 -->
+    <cache:annotation-driven key-generator="userKeyGenerator" proxy-target-class="false"/><!-- 啟動cache的annotation設定 -->
+    <!--proxy-target-class=true使用內部方法this.去呼叫一樣會執行…false使用內部方法去呼叫則不會執行-->
     <bean id="userKeyGenerator" class="com.jiang.etonlearn.cache.MyKeyGenerator"/>
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cache-manager-ref="ehcache"/>
     <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="classpath:ehcache.xml" p:shared="true"/>
