@@ -5,13 +5,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Repository("activityRepository")
 public interface ActivityRepository {
-    List<Activity> queryByName(String name);
 
-    int save(Activity activity);
+	List<Activity> queryByName(String name);
 
-    int update(Activity activity);
+	int save(Activity activity);
 
-    void deleteById(int id);
+	int update(Activity activity);
+
+	void deleteById(int id);
 }
