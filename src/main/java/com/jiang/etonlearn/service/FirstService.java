@@ -14,13 +14,25 @@ public class FirstService {
 	@Autowired
 	ActivityRepository activityRepository;
 
+	@Autowired
+	FirstService firstService;
+
 	@Cacheable("firstService")
 	public List<Activity> queryActivity(){
 		return activityRepository.queryByName("rock");
 	}
 
 	public List<Activity> queryActivity2(){
-		return this.queryActivity();
+		return firstService.queryActivity();
 	}
 
+	@Cacheable("testCache")
+	public int getOne(int item) {
+		return item+1;
+	}
+
+	@Cacheable(value = "testCache")
+	public Object getTwo(int item) {
+		return item+1;
+	}
 }

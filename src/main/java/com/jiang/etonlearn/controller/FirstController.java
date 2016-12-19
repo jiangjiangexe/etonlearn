@@ -12,10 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +69,7 @@ public class FirstController {
 	}
 
 	@RequestMapping("/getCache")
-	public ResponseEntity getCache(@RequestParam(required = false)String ex) {
+	public ResponseEntity getCache(@RequestParam(required = false) String ex) {
 		Cache cache = cacheManager.getCache("cache1");
 		Element element = cache.get("greeting");
 		System.out.print(element.getObjectKey() + "," + element.getObjectValue());
@@ -80,5 +77,15 @@ public class FirstController {
 		map.put("key", element.getObjectKey());
 		map.put("value", element.getObjectValue());
 		return new ResponseEntity(map, HttpStatus.OK);
+	}
+
+	@RequestMapping("/get1/{item}")
+	public ResponseEntity getOne(@PathVariable int item) {
+		return new ResponseEntity(firstService.getOne(item), HttpStatus.OK);
+	}
+
+	@RequestMapping("/get2/{item}")
+	public ResponseEntity getTwo(@PathVariable int item) {
+		return new ResponseEntity(firstService.getTwo(item), HttpStatus.OK);
 	}
 }
