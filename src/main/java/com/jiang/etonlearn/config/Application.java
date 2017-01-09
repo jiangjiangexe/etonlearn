@@ -43,7 +43,7 @@ public class Application {
 	}
 
 	@Bean
-	public SqlSessionFactoryBean sqlSessionFactory(ApplicationContext ap) throws Exception {
+	public SqlSessionFactoryBean sqlSessionFactory(ApplicationContext applicationContext) throws Exception {
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
 		sessionFactory.setConfigLocation(new ClassPathResource("mybatis.xml"));
@@ -63,4 +63,9 @@ public class Application {
 		}
 		activityRepository.deleteById(1);
 	}
+
+	// TODO 多國語言
+	// TODO 全形轉半形
+	// TODO trim
+	// TODO 登入資訊重複jwtToken
 }
