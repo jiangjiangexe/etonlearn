@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">  
+    <!--  
+    name：Cache的唯一識別
+    maxElementsInMemory：Memory中最大Cache Element數
+    maxElementsOnDisk：Disk中最大Cache Element數，若是0表示無限大  
+    eternal：Element是否永久有效，一但設定了，timeout將不起作用
+    overflowToDisk：當記憶體中Element數量達到maxElementsInMemory時，Ehcache將會Element寫到硬碟中  
+    timeToIdleSeconds：設定Element在失效前的允許閒置時間。僅當element不是永久有效時使用，可選屬性，default值是0，也就是可閒置時間無限大  
+    timeToLiveSeconds：設定Element在失效前允許存活時間。最大時間介於建立時間和失效時間之間。僅當element不是永久有效時使用，default值是0，也就是element存活時間無限大 意思是從cache中的某個Element從建立到消失的時間，從建立開始計時，當超過這個時間，這個Element將從cache中清除  
+    diskPersistent：是否cache JVM重啟時的資料
+    diskExpiryThreadIntervalSeconds：硬碟失效Thread執行時間間隔，預設是120秒
+    diskSpoolBufferSizeMB：設定DiskStore（硬碟cache）的Cache大小。預設是30MB。每個Cache都應該有自己的一個Cache區  
+    memoryStoreEvictionPolicy：當達到maxElementsInMemory限制時，Ehcache將會根據指定的規則去清理memory。預設是LRU（最近最少使用）。你可以設定為FIFO（先進先出）或是LFU（較少使用）  
+    -->
+    <diskStore path="${ehcache.disk.store.dir}"/>
+    <!-- JWT Token cache key=user value=JWT Token,3600sec(1個小時逾期) -->
+    <cache name="activityRepository" maxElementsInMemory="200" maxElementsOnDisk="20000" eternal="false" overflowToDisk="false" timeToIdleSeconds="0" timeToLiveSeconds="3600" copyOnRead="false" copyOnWrite="false" diskPersistent="false" memoryStoreEvictionPolicy="FIFO" />
+	<cache name="firstService" maxElementsInMemory="200" maxElementsOnDisk="20000" eternal="false" overflowToDisk="false" timeToIdleSeconds="0" timeToLiveSeconds="3600" copyOnRead="false" copyOnWrite="false" diskPersistent="false" memoryStoreEvictionPolicy="FIFO" />
+    <cache name="testCache" maxElementsInMemory="200" maxElementsOnDisk="20000" eternal="false" overflowToDisk="false" timeToIdleSeconds="0" timeToLiveSeconds="3600" copyOnRead="false" copyOnWrite="false" diskPersistent="false" memoryStoreEvictionPolicy="FIFO" />
+</ehcache>
