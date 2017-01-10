@@ -36,6 +36,8 @@ dependencies {
     compile group: 'javax.cache', name: 'cache-api', version: '1.0.0'
     compile group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.1'
     compile group: 'org.jsr107.ri', name: 'cache-ri-impl', version: '1.0.0'
+    compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.2.4.Final'
+
 //    compile 'org.springframework.data:spring-data-jpa:1.10.5.RELEASE'
 
     compile group: 'org.activiti', name: 'activiti-engine', version: '5.20.0'
