@@ -5,6 +5,10 @@ import java.lang.reflect.Field;
 public class AssignFieldDemo {
     public static void main(String[] args) {
         try {
+            // getFields() & getDeclaredFields() difference
+            // getFields()获得某个类的所有的公共（public）的字段，包括父类。
+            // getDeclaredFields()获得某个类的所有申明的字段，即包括public、private和proteced，但是不包括父类的申明字段。
+            // 同样类似的还有getConstructors()和getDeclaredConstructors()，getMethods()和getDeclaredMethods()。
             args = new String[]{"com.jiang.etonlearn.play.TestField"};
             Class c = Class.forName(args[0]);
             Object targetObj = c.newInstance();

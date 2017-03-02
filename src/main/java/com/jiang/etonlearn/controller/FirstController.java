@@ -3,6 +3,7 @@ package com.jiang.etonlearn.controller;
 import com.jiang.etonlearn.entity.Activity;
 import com.jiang.etonlearn.repository.ActivityRepository;
 import com.jiang.etonlearn.service.FirstService;
+import com.jiang.etonlearn.service.I18nUtil;
 import com.jiang.etonlearn.view.First;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
@@ -19,10 +20,7 @@ import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/test")
@@ -45,7 +43,7 @@ public class FirstController {
     @Autowired
     LocaleResolver localeResolver;
 
-     // 變更多國語系用
+    // 變更多國語系用
     @RequestMapping("/lang/{locale}")
     public LocaleResolver changeLang(HttpServletRequest request, HttpServletResponse response, @PathVariable String locale) {
         localeResolver.setLocale(request, response, new Locale(locale));
@@ -54,16 +52,10 @@ public class FirstController {
 
     @RequestMapping("/query")
     public First query() {
-
         Locale locale = LocaleContextHolder.getLocale();
-
-        log.info("rockmanexe");
         First first = new First();
-        Activity activity = new Activity();
         String message = messageSource.getMessage("pokemon", null, locale);
         first.setUsername(message);
-        activity.setVersion(1);
-        activityRepository.save(activity);
         return first;
     }
 
@@ -109,5 +101,26 @@ public class FirstController {
     @RequestMapping("/get2/{item}")
     public ResponseEntity getTwo(@PathVariable int item) {
         return new ResponseEntity(firstService.getTwo(item), HttpStatus.OK);
+    }
+
+    @RequestMapping("/setX/{date}")
+    public ResponseEntity setX(@PathVariable Date date) {
+        return new ResponseEntity(date, HttpStatus.OK);
+    }
+
+    @RequestMapping("/get18n")
+    public ResponseEntity get18n() {
+        return new ResponseEntity(I18nUtil.getListByKey("ord.type"), HttpStatus.OK);
+    }
+
+    @RequestMapping("/get18n/{list}")
+    public ResponseEntity get18n(@PathVariable int[] list) {
+        return new ResponseEntity(I18nUtil.getListByKeyAndNum("ord.type", list), HttpStatus.OK);
+    }
+
+    @RequestMapping("/get18nDelete")
+    public ResponseEntity get18nX() {
+        String rock = I18nUtil.showDelete("rock");
+        return new ResponseEntity(rock, HttpStatus.OK);
     }
 }
