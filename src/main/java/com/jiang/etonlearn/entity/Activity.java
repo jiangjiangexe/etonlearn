@@ -1,10 +1,13 @@
 package com.jiang.etonlearn.entity;
 
+import java.util.List;
+
 public class Activity {
 
     private int oid;
     private String name;
     private int version;
+    private List<Company> companies;
 
     public int getOid() {
         return oid;
@@ -28,5 +31,13 @@ public class Activity {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public List<Company> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(List<Company> companies) {
+        this.companies = companies;
     }
 }

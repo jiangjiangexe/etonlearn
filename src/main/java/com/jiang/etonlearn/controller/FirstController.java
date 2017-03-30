@@ -1,9 +1,11 @@
 package com.jiang.etonlearn.controller;
 
 import com.jiang.etonlearn.entity.Activity;
+import com.jiang.etonlearn.entity.Company;
 import com.jiang.etonlearn.repository.ActivityRepository;
 import com.jiang.etonlearn.service.FirstService;
 import com.jiang.etonlearn.view.First;
+import com.jiang.etonlearn.vo.Let;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
@@ -19,10 +21,10 @@ import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/test")
@@ -108,6 +110,21 @@ public class FirstController {
 
     @RequestMapping("/get2/{item}")
     public ResponseEntity getTwo(@PathVariable int item) {
-        return new ResponseEntity(firstService.getTwo(item), HttpStatus.OK);
+        List<Activity> activities = activityRepository.queryByName("DIOGA");
+        final Stream<List<Company>> listStream = activities.stream()
+                .map(Activity::getCompanies);
+
+        // http://ifeve.com/stream/
+
+        List<String> gg = activities.stream()
+                .map(Activity::getCompanies) // 回傳的是一個，对一个流中的值进行某种形式的转换
+                .flatMap(companies -> companies.stream()) // company, company, company將list轉為Stream<Company>，並展開
+                .map(Company::getAddress) //
+                .collect(toList());
+
+        List<Integer> rock = activityRepository.queryByName("DIOGA").stream()
+                .filter(activity -> activity.getOid()==item).map(Activity::getOid)
+                .collect(toList());
+        return new ResponseEntity(gg, HttpStatus.OK);
     }
 }

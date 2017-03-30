@@ -1,8 +1,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiang.etonlearn.repository.ActivityRepository">
 
-    <select id="queryByName" resultType="Activity">
-        SELECT *  FROM ACTIVITY WHERE NAME LIKE "%"#{name}"%"
+    <sql id="activity_columnsAlias">
+        ${alias}.oid                       ${prefix}oid,
+        ${alias}.name                     ${prefix}name,
+        ${alias}.version                          ${prefix}version
+    </sql>
+    <sql id="company_columnsAlias">
+        ${alias}.oid                       ${prefix}oid,
+        ${alias}.name                     ${prefix}name,
+        ${alias}.address                          ${prefix}address
+    </sql>
+
+    <resultMap id="activityResult" type="Activity">
+        <id property="oid" column="oid"/>
+        <result property="name" column="name"/>
+        <result property="version" column="version"/>
+        <collection property="companies" ofType="Company">
+            <id property="oid" column="company_oid"/>
+            <result property="name" column="company_name"/>
+            <result property="address" column="company_address"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryByName" resultMap="activityResult" resultType="List">
+        SELECT
+        <include refid="activity_columnsAlias">
+            <property name="alias" value="activity"/>
+            <property name="prefix" value=""/>
+        </include>,
+        <include refid="company_columnsAlias">
+            <property name="alias" value="company"/>
+            <property name="prefix" value="company_"/>
+        </include>
+        FROM ACTIVITY activity
+        JOIN ACTIVITY_M_COMPANY M ON activity.oid = M.activity
+        JOIN COMPANY company ON company.oid = M.company
+        WHERE activity.NAME LIKE "%"#{name}"%"
     </select>
 
     <insert id="save" parameterType="Activity" useGeneratedKeys="true" keyProperty="oid">
