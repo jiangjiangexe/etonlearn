@@ -5,7 +5,6 @@ import com.jiang.etonlearn.entity.Company;
 import com.jiang.etonlearn.repository.ActivityRepository;
 import com.jiang.etonlearn.service.FirstService;
 import com.jiang.etonlearn.view.First;
-import com.jiang.etonlearn.vo.Let;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
@@ -25,6 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/test")
@@ -47,7 +49,7 @@ public class FirstController {
     @Autowired
     LocaleResolver localeResolver;
 
-     // 變更多國語系用
+    // 變更多國語系用
     @RequestMapping("/lang/{locale}")
     public LocaleResolver changeLang(HttpServletRequest request, HttpServletResponse response, @PathVariable String locale) {
         localeResolver.setLocale(request, response, new Locale(locale));
@@ -123,7 +125,7 @@ public class FirstController {
                 .collect(toList());
 
         List<Integer> rock = activityRepository.queryByName("DIOGA").stream()
-                .filter(activity -> activity.getOid()==item).map(Activity::getOid)
+                .filter(activity -> activity.getOid() == item).map(Activity::getOid)
                 .collect(toList());
         return new ResponseEntity(gg, HttpStatus.OK);
     }
