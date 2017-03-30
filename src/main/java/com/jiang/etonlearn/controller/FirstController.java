@@ -21,10 +21,10 @@ import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
-import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/test")
@@ -61,11 +61,11 @@ public class FirstController {
 
         log.info("rockmanexe");
         First first = new First();
-//        Activity activity = new Activity();
+        Activity activity = new Activity();
         String message = messageSource.getMessage("pokemon", null, locale);
         first.setUsername(message);
-//        activity.setVersion(1);
-//        activityRepository.save(activity);
+        activity.setVersion(1);
+        activityRepository.save(activity);
         return first;
     }
 
